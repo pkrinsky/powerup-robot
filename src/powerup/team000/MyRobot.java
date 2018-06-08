@@ -9,17 +9,22 @@ public class MyRobot extends Robot {
 	/* 
 	 * Called periodically by the GameClient to get the next move
 	 */
-	public int move(Field field) {
+	public int getMove(Field field) {
 		// default next move to STOP
 		int nextMove = Robot.STOP;
 		
 		// controls which algorithm to use to control the robot
 		int algorithm = 2;
+		
+		// after five seconds switch to manual 
+		if (field.getGameSecs() < Field.GAME_SECS - 5) {
+			algorithm = 1;
+		}
 
 		switch (algorithm) {
 		case 1:
 			// manually control the robot with the keyboard
-			nextMove = super.move(field);
+			nextMove = super.getMove(field);
 			break;
 		case 2:
 			// autonomous routine to move to the scale and shoot
