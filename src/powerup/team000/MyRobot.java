@@ -1,44 +1,74 @@
 package powerup.team000;
 
+import powerup.engine.Util;
 import powerup.field.Field;
 import powerup.field.FieldObject;
 import powerup.field.Robot;
 
+@SuppressWarnings("unused")
 public class MyRobot extends Robot {
 	
 	/* 
 	 * Called periodically by the GameClient to get the next move
 	 */
+	
 	public int getMove(Field field) {
-		// default next move to STOP
+		return moveChallenge1(field);
+		//return moveChallenge2(field);
+		//return moveChallenge3(field);
+		//return moveChallenge4(field);
+	}
+	
+	
+	/* 
+	 * Challenge #1
+	 */
+
+	private int moveChallenge1(Field field) {
+		return super.getMove(field);
+	}	
+	
+	
+	/* 
+	 * Challenge #2
+	 */
+
+	private int moves = 0;
+	
+	private int moveChallenge2(Field field) {
+		moves = moves + 1;
+		Util.log("move:"+moves);
+		return super.getMove(field);
+	}
+	
+	
+	
+	/* 
+	 * Challenge #3
+	 */
+
+	
+	private int moveChallenge3(Field field) {
 		int nextMove = Robot.STOP;
 		
-		// controls which algorithm to use to control the robot
-		int algorithm = 2;
+		moves = moves + 1;
+		Util.log("move:"+moves);
 		
-		// after five seconds switch to manual 
-		if (field.getGameSecs() < Field.GAME_SECS - 5) {
-			algorithm = 1;
-		}
-
-		switch (algorithm) {
-		case 1:
-			// manually control the robot with the keyboard
-			nextMove = super.getMove(field);
-			break;
-		case 2:
-			// autonomous routine to move to the scale and shoot
-			nextMove = moveToScaleAndShoot(field);
-			break;
-		}
-
+		if (getCol() < 11)
+			nextMove = Robot.EAST;
+		else 
+			nextMove = super.getMove(field); 
+		
 		return nextMove;
-	}	
-
+	}
+	
+	
+	
 	/* 
-	 * Determine the next move using basic positional logic
-	 */
-	private int moveToScaleAndShoot(Field field) {
+	 * Challenge #4
+	 */	
+	
+	private int moveChallenge4(Field field) {
 		// default next move to STOP
 		int nextMove = Robot.STOP;
 		
@@ -70,6 +100,6 @@ public class MyRobot extends Robot {
 		
 		return nextMove;
 	}
-
 	
+
 }
