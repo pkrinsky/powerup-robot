@@ -13,29 +13,29 @@ public class MyRobot extends Robot {
 	 */
 	
 	public int getMove(Field field) {
-		return moveChallenge1(field);
+		return moveManual(field);
+		//return moveChallenge1(field);
 		//return moveChallenge2(field);
 		//return moveChallenge3(field);
-		//return moveChallenge4(field);
 	}
+	
+	
+	/* 
+	 * Manual movement using the keyboard
+	 */
+
+	private int moveManual(Field field) {
+		return super.getMove(field);
+	}	
 	
 	
 	/* 
 	 * Challenge #1
 	 */
 
-	private int moveChallenge1(Field field) {
-		return super.getMove(field);
-	}	
-	
-	
-	/* 
-	 * Challenge #2
-	 */
-
 	private int moves = 0;
 	
-	private int moveChallenge2(Field field) {
+	private int moveChallenge1(Field field) {
 		moves = moves + 1;
 		Util.log("move:"+moves);
 		return super.getMove(field);
@@ -44,11 +44,11 @@ public class MyRobot extends Robot {
 	
 	
 	/* 
-	 * Challenge #3
+	 * Challenge #2
 	 */
 
 	
-	private int moveChallenge3(Field field) {
+	private int moveChallenge2(Field field) {
 		int nextMove = Robot.STOP;
 		
 		moves = moves + 1;
@@ -65,10 +65,10 @@ public class MyRobot extends Robot {
 	
 	
 	/* 
-	 * Challenge #4
+	 * Challenge #3
 	 */	
 	
-	private int moveChallenge4(Field field) {
+	private int moveChallenge3(Field field) {
 		// default next move to STOP
 		int nextMove = Robot.STOP;
 		
