@@ -5,28 +5,44 @@ import powerup.tank.base.CommandBase;
 
 public class Turn extends CommandBase {
 	
-	double minimumSpeed;
-	double amountTurn;
-	double currAngle;
-	double angleError;
+	private boolean success = false;
+	private int targetTurn;
+	private int startAngle;
+	private int targetAngle;
 	
-	public static enum Units {
-		Degrees, Radians, Rotations;
+	public Turn(int turn) {
+		this.targetTurn = turn;
 	}
+	
+	// Called just before this Command runs the first time
+	protected void initialize() {
+		Robot.log("Turn:initialize");
+		success = false;
+		startAngle = Robot.driveTrain.getAngle();
+		targetAngle = startAngle + targetTurn;
+		Robot.log("Turn:targetAngle:"+targetAngle);
+	}	
 
-	public Turn(double amountTurn, Units turnUnits) {// does not use vision
-		this.amountTurn = amountTurn;
-	}
-
+	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		currAngle = Robot.driveTrain.getGyroRotation();
-		angleError = amountTurn - currAngle;
-		angleError = angleError < -180 ? angleError + 360 : angleError;
-		angleError = angleError > 180 ? angleError - 360 : angleError;
+		int currentAngle = Robot.driveTrain.getAngle();
+		Robot.log("DriveStraight:currentAngle:"+currentAngle);
+		
+		if (currentAngle == targetAngle) success = true;
+		
+		if (!success) {
+			if (currentAngle < targetAngle) {
+				Robot.driveTrain.tankDrive(1, 0);	
+			} else {
+				Robot.driveTrain.tankDrive(0, 1);
+			}
+		} else {
+			Robot.driveTrain.tankDrive(0, 0);
+		}
 	}
 
 	protected boolean isFinished() {
-		return true;	
+		return success;	
 	}
 
 	protected void end() {
