@@ -27,6 +27,7 @@ public class TankGraphics extends Canvas{
 
 	private BufferStrategy strategy;
 	private BufferedImage robotImage;
+	private BufferedImage dotImage;
 	
 	private BufferedImage getImage(String filename) {
 		BufferedImage sourceImage = null;
@@ -51,6 +52,7 @@ public class TankGraphics extends Canvas{
 	public void setup() {
 		//Robot.log("GraphicsController.setup");
 		robotImage = getImage("robot.png");
+		dotImage = getImage("dot.png");
 		
 		JFrame container = new JFrame("Tank");
 		
@@ -94,11 +96,30 @@ public class TankGraphics extends Canvas{
 		g.setColor(Color.black);
 		g.fillRect(0,0,WIDTH,HEIGHT);
 		
+		// draw dots
+		int x = TankGraphics.WIDTH / 2;
+		int y = TankGraphics.HEIGHT - 200;
+		for (int i=0;i<4;i++) {
+			y -= 50;
+			g.drawImage(dotImage, x, y, null);	
+		}
+		
+		for (int i=0;i<4;i++) {
+			x += 50;
+			g.drawImage(dotImage, x, y, null);	
+		}
+		
+		for (int i=0;i<4;i++) {
+			y -= 50;
+			g.drawImage(dotImage, x, y, null);	
+		}
+		
 		// rotate as needed around the center of the image
 		double rotationRequired = Math.toRadians (angle);
-		double locationX = robotImage.getWidth() / 2;
-		double locationY = robotImage.getHeight() / 2;
-		AffineTransform tx = AffineTransform.getRotateInstance(rotationRequired, locationX, locationY);
+		double centerX = robotImage.getWidth() / 2;
+		double centerY = robotImage.getHeight() / 2;
+		
+		AffineTransform tx = AffineTransform.getRotateInstance(rotationRequired, centerX, centerY);
 		AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
 
 		// Drawing the rotated image at the required drawing locations

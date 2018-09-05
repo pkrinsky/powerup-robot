@@ -7,8 +7,8 @@ public class DriveTrainBase {
 	
 	private double distance = 0;
 	private int angle = 0;
-	private int posX = TankGraphics.HEIGHT / 2;
-	private int posY = TankGraphics.WIDTH / 2;
+	private int posX = TankGraphics.WIDTH / 2;
+	private int posY = TankGraphics.HEIGHT - 100;
 	private int speed = 5;
 	
 	public double getAverageDistanceInInches() {
