@@ -6,20 +6,16 @@ import powerup.tank.base.CommandBase;
 public class Turn extends CommandBase {
 	
 	private boolean success = false;
-	private int targetTurn;
-	private int startAngle;
 	private int targetAngle;
 	
-	public Turn(int turn) {
-		this.targetTurn = turn;
+	public Turn(int angle) {
+		this.targetAngle = angle;
 	}
 	
 	// Called just before this Command runs the first time
 	protected void initialize() {
 		Robot.log("Turn:initialize");
 		success = false;
-		startAngle = Robot.driveTrain.getAngle();
-		targetAngle = startAngle + targetTurn;
 		Robot.log("Turn:targetAngle:"+targetAngle);
 	}	
 

@@ -8,6 +8,8 @@ public class DriveFromAtoB extends CommandGroupBase{
 		addSequential(new DriveStraight(300));  
 		addSequential(new Turn(90));
 		addSequential(new DriveStraight(200));
+		addSequential(new Turn(0));
+		addSequential(new DriveStraight(200));
 	} 
 	
 }
