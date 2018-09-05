@@ -10,29 +10,30 @@ public class DriveStraight extends CommandBase {
 	private boolean success = false;
 	
 	public DriveStraight(double distance) {
-		super();
+		// save the target distance for later
 		this.targetDistance = distance;
+		Robot.log("DriveStraight:targetDistance:"+targetDistance);
 	}
 
 	
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		Robot.log("DriveStraight:initialize");
-		success = false;
-		startDistance = Robot.driveTrain.getAverageDistanceInInches();
+		// save the starting point for later
+		startDistance = Robot.driveTrain.getDistance();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		double currentDistance = Robot.driveTrain.getAverageDistanceInInches() - startDistance;
+		// calc distance traveled since this command started
+		double currentDistance = Robot.driveTrain.getDistance() - startDistance;
 		Robot.log("DriveStraight:currentDistance:"+currentDistance);
 		
-		if (currentDistance >= targetDistance) success = true;
-		
-		if (!success) {
-			Robot.driveTrain.tankDrive(1, 1);
-		} else {
+		// if we have gone far enough then stop
+		if (currentDistance >= targetDistance) {
 			Robot.driveTrain.tankDrive(0, 0);
+			success = true;
+		} else {
+			Robot.driveTrain.tankDrive(1, 1);
 		}
 	}
 
@@ -40,12 +41,5 @@ public class DriveStraight extends CommandBase {
 	protected boolean isFinished() {
 		return success;
 	}
-
-	// Called once after isFinished returns true
-	protected void end() {
-
-	}
-
-
 
 }

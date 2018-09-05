@@ -11,8 +11,7 @@ public class DriveTrainBase {
 	private int posY = TankGraphics.HEIGHT - 100;
 	private int speed = 5;
 	
-	public double getAverageDistanceInInches() {
-		Robot.log("DriveTrainBase:getAverageDistanceInInches:"+distance);
+	public double getDistance() {
 		return distance; 
 	}
 	
