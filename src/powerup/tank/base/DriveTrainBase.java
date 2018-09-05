@@ -1,14 +1,15 @@
 package powerup.tank.base;
 
 import powerup.tank.Robot;
+import powerup.tank.graphics.TankGraphics;
 
 public class DriveTrainBase {
 	
 	private double distance = 0;
 	private int angle = 0;
-	private int posX = 100;
-	private int posY = 100;
-	private int speed = 1;
+	private int posX = TankGraphics.HEIGHT / 2;
+	private int posY = TankGraphics.WIDTH / 2;
+	private int speed = 5;
 	
 	public double getAverageDistanceInInches() {
 		Robot.log("DriveTrainBase:getAverageDistanceInInches:"+distance);
@@ -27,6 +28,14 @@ public class DriveTrainBase {
 		return angle;
 	}
 	
+	public int getPositionX() {
+		return posX;
+	}
+	
+	public int getPositionY() {
+		return posY;
+	}
+	
 	public int getSpeed() {
 		return speed;
 	}
@@ -39,13 +48,13 @@ public class DriveTrainBase {
 			Robot.log("DriveTrainBase:tankDrive forward");
 			distance += speed;
 			if (angle == 0) {
-				posX = posX + speed;
-			} else if (angle == 180 || angle == -180) {
-				posX = posX - speed;
-			} else if (angle == 90) {
-				posY = posY + speed;
-			} else if (angle == -90) {
 				posY = posY - speed;
+			} else if (angle == 180 || angle == -180) {
+				posY = posY + speed;
+			} else if (angle == 90) {
+				posX = posX + speed;
+			} else if (angle == -90) {
+				posX = posX - speed;
 			}
 		} else if (left < 0 && right < 0 && left == right) {
 			Robot.log("DriveTrainBase:tankDrive reverse");

@@ -1,6 +1,7 @@
 package powerup.tank.base;
 
 import powerup.tank.Robot;
+import powerup.tank.graphics.TankGraphics;
 
 public class RobotRunner {
 	
@@ -12,6 +13,9 @@ public class RobotRunner {
 		
 		Robot.log("RobotRunner:robotInit");
 		robot.robotInit();
+		
+		TankGraphics graphics = new TankGraphics();
+		graphics.setup();
 		
 		while (running) {
 			
@@ -35,10 +39,12 @@ public class RobotRunner {
 				command.execute();	
 			}
 			
+			graphics.drawField(Robot.driveTrain.getPositionX(), Robot.driveTrain.getPositionY(), Robot.driveTrain.getAngle());
+			
 			
 			// add a little delay
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(100);
 				Robot.log("--------------------------\n\n");
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block

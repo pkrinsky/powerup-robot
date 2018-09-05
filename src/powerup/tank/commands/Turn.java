@@ -32,9 +32,9 @@ public class Turn extends CommandBase {
 		
 		if (!success) {
 			if (currentAngle < targetAngle) {
-				Robot.driveTrain.tankDrive(1, 0);	
+				Robot.driveTrain.tankDrive(1, -1);	
 			} else {
-				Robot.driveTrain.tankDrive(0, 1);
+				Robot.driveTrain.tankDrive(-1, 1);
 			}
 		} else {
 			Robot.driveTrain.tankDrive(0, 0);
