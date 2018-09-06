@@ -12,10 +12,15 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import powerup.tank.Robot;
 
 
 public class TankGraphics extends Canvas{
@@ -24,10 +29,13 @@ public class TankGraphics extends Canvas{
 	
 	public static final int HEIGHT = 600;
 	public static final int WIDTH = 600;
+	private static int score = 0;
+	private static long startTime = 0;
 
 	private BufferStrategy strategy;
 	private BufferedImage robotImage;
 	private BufferedImage dotImage;
+	private List<Dot> dotList = new ArrayList<Dot>();
 	
 	private BufferedImage getImage(String filename) {
 		BufferedImage sourceImage = null;
@@ -46,11 +54,17 @@ public class TankGraphics extends Canvas{
 		return sourceImage;
 	}
 	
-
+	public static int getScore() {
+		return score;
+	}
+	
+	public static long getTime() {
+		return (System.currentTimeMillis() - startTime) / 1000;
+	}
 
 	
 	public void setup() {
-		//Robot.log("GraphicsController.setup");
+		startTime = System.currentTimeMillis();
 		robotImage = getImage("robot.png");
 		dotImage = getImage("dot.png");
 		
@@ -81,10 +95,67 @@ public class TankGraphics extends Canvas{
 		createBufferStrategy(2);
 		strategy = getBufferStrategy();
 		
-		//Robot.log("GraphicsController.setup complete");
+		// create the dots
+		int x = TankGraphics.WIDTH / 2;
+		int y = TankGraphics.HEIGHT - 100;
+		
+		for (int i=0;i<4;i++) {
+			y -= 50;
+			dotList.add(new Dot(x,y));	
+		}
+		
+		for (int i=0;i<4;i++) {
+			x += 50;
+			dotList.add(new Dot(x,y));	
+		}
+		
+		for (int i=0;i<4;i++) {
+			y -= 50;
+			dotList.add(new Dot(x,y));	
+		}
+		
+		for (int i=0;i<8;i++) {
+			x -= 50;
+			dotList.add(new Dot(x,y));	
+		}
+		
+		for (int i=0;i<6;i++) {
+			y += 50;
+			dotList.add(new Dot(x,y));	
+		}
+		
+		y += 50;
+		x += 50;
+		dotList.add(new Dot(x,y));	
+		
+		y += 50;
+		x += 50;
+		dotList.add(new Dot(x,y));	
+		
+		y += 50;
+		x += 50;
+		dotList.add(new Dot(x,y));	
 
+		for (int i=0;i<5;i++) {
+			x += 50;
+			dotList.add(new Dot(x,y));	
+		}
+
+		
 	}
 	
+	
+	private boolean checkForCollision(Dot dot, int x, int y) {
+		boolean collision = false;
+		
+		if (dot.getX() == x && dot.getY() == y) {
+			collision = true;
+			score++;
+			Robot.log("YUM YUM "+score);
+		}
+		
+		return collision;
+	}
 	
 
 
@@ -96,24 +167,17 @@ public class TankGraphics extends Canvas{
 		g.setColor(Color.black);
 		g.fillRect(0,0,WIDTH,HEIGHT);
 		
-		// draw dots
-		int x = TankGraphics.WIDTH / 2;
-		int y = TankGraphics.HEIGHT - 200;
-		for (int i=0;i<4;i++) {
-			y -= 50;
-			g.drawImage(dotImage, x, y, null);	
-		}
-		
-		for (int i=0;i<4;i++) {
-			x += 50;
-			g.drawImage(dotImage, x, y, null);	
-		}
-		
-		for (int i=0;i<4;i++) {
-			y -= 50;
-			g.drawImage(dotImage, x, y, null);	
-		}
-		
+		// draw the dots and check for collisions
+		for (Iterator<Dot> iterator = dotList.iterator(); iterator.hasNext();) {
+		    Dot d = iterator.next();
+			if (checkForCollision(d,posX, posY)) {
+				iterator.remove();
+			} else {
+				g.drawImage(dotImage, d.getX(), d.getY(), null);
+			}
+		}		
+
+		// draw pacman
 		// rotate as needed around the center of the image
 		double rotationRequired = Math.toRadians (angle);
 		double centerX = robotImage.getWidth() / 2;
@@ -124,6 +188,9 @@ public class TankGraphics extends Canvas{
 
 		// Drawing the rotated image at the required drawing locations
 		g.drawImage(op.filter(robotImage, null), posX, posY, null);
+		
+		g.setColor(Color.white);
+		g.drawString("Time "+getTime()+" Score "+score,25,25);
 		
 		// show the graphics
 		g.dispose();

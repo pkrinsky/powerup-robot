@@ -17,7 +17,7 @@ public class RobotRunner {
 		TankGraphics graphics = new TankGraphics();
 		graphics.setup();
 		
-		while (running) {
+		while (running && TankGraphics.getTime() < 30) {
 			
 			CommandBase command = group.getCommand(currentCommand);
 			
@@ -47,13 +47,12 @@ public class RobotRunner {
 				Thread.sleep(100);
 				Robot.log("--------------------------\n\n");
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
 		}
 		
-		Robot.log("RobotRunner:done");
+		Robot.log("RobotRunner:done score:"+TankGraphics.getScore());
 		
 	}
 
