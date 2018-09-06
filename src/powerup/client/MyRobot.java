@@ -1,4 +1,4 @@
-package powerup.team000;
+package powerup.client;
 
 import powerup.engine.Util;
 import powerup.field.Field;
