@@ -15,8 +15,7 @@ public class DriveStraight extends CommandBase {
 		Robot.log("DriveStraight:targetDistance:"+targetDistance);
 	}
 
-	
-	// Called just before this Command runs the first time
+		// Called just before this Command runs the first time
 	protected void initialize() {
 		// save the starting point for later
 		startDistance = Robot.driveTrain.getDistance();

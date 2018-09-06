@@ -22,8 +22,8 @@ public class TankGraphics extends Canvas{
 	
 	private static final long serialVersionUID = -7506350633593738441L;
 	
-	public static final int HEIGHT = 800;
-	public static final int WIDTH = 800;
+	public static final int HEIGHT = 600;
+	public static final int WIDTH = 600;
 
 	private BufferStrategy strategy;
 	private BufferedImage robotImage;
@@ -54,7 +54,7 @@ public class TankGraphics extends Canvas{
 		robotImage = getImage("robot.png");
 		dotImage = getImage("dot.png");
 		
-		JFrame container = new JFrame("Tank");
+		JFrame container = new JFrame("Robo Pacman");
 		
 		JPanel panel = (JPanel) container.getContentPane();
 		panel.setPreferredSize(new Dimension(WIDTH,HEIGHT));
