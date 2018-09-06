@@ -44,7 +44,7 @@ public class RobotRunner {
 			
 			// add a little delay
 			try {
-				Thread.sleep(100);
+				Thread.sleep(10);
 				Robot.log("--------------------------\n\n");
 			} catch (InterruptedException e) {
 				e.printStackTrace();

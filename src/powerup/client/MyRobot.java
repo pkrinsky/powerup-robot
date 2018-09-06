@@ -89,8 +89,6 @@ public class MyRobot extends Robot {
 		if (currentCol < targetCol)
 			nextMove = Robot.EAST;
 		
-		//TODO need to implement SOUTH and WEST
-		
 		// if we have arrived and have a cube then shoot
 		if (currentRow == targetRow 
 				&& currentCol == targetCol
