@@ -6,6 +6,10 @@ import powerup.tank.graphics.TankGraphics;
 public class RobotRunner {
 	
 	public static void run(RobotBase robot, CommandGroupBase group) {
+		run(robot,group,100);
+	}
+	
+	public static void run(RobotBase robot, CommandGroupBase group, long delay) {
 		
 		boolean running = true;
 		int currentCommand = 0;
@@ -22,10 +26,17 @@ public class RobotRunner {
 			CommandBase command = group.getCommand(currentCommand);
 			
 			// check to see if this command is finished
-			if (command != null && command.isFinished()) {
-				currentCommand ++;
-				runInit = true;
-				command = group.getCommand(currentCommand);
+			if (command != null) {
+				Robot.log("RobotRunner:got command "+command.getClass().getName()+" isFinished:"+command.isFinished());
+				if (command.isFinished()) {
+					currentCommand ++;
+					runInit = true;
+					command = group.getCommand(currentCommand);
+					if (command != null)
+						Robot.log("RobotRunner:got next command "+command.getClass().getName());
+				}
+			} else {
+				Robot.log("RobotRunner:no commands to run");
 			}
 			
 			if (command == null) {
@@ -44,7 +55,7 @@ public class RobotRunner {
 			
 			// add a little delay
 			try {
-				Thread.sleep(10);
+				Thread.sleep(delay);
 				Robot.log("--------------------------\n\n");
 			} catch (InterruptedException e) {
 				e.printStackTrace();

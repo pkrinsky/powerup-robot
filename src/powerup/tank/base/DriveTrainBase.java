@@ -4,14 +4,13 @@ import powerup.tank.Robot;
 import powerup.tank.graphics.TankGraphics;
 
 public class DriveTrainBase {
-
-	public static final int MAX_SPEED = 1;
 	
+	public static int MAX_SPEED = 5;
 	private double distance = 0;
 	private int angle = 0;
 	private int posX = TankGraphics.WIDTH / 2;
 	private int posY = TankGraphics.HEIGHT - 100;
-	private int speed = 0;
+	private int speed = 5;
 	
 	public double getDistance() {
 		return distance; 
@@ -46,17 +45,16 @@ public class DriveTrainBase {
 
 		// calculate speed and angle based on inputs
 		if (left == 0 && right == 0) {
-			// NEUTRAL: slow down until we reach zero
-			if (speed > 0) speed--;
-			if (speed < 0) speed++;
+			// NEUTRAL: stop
+			speed = 0;
 			Robot.log("DriveTrainBase:tankDrive neutral");
 		} else if (left > 0 && right > 0 && left == right) {
 			// FORWARD: increase speed
-			if (speed < MAX_SPEED) speed++;
+			speed = MAX_SPEED;
 			Robot.log("DriveTrainBase:tankDrive forward");
 		} else if (left < 0 && right < 0 && left == right) {
 			// REVERSE: increase speed
-			if (speed > -MAX_SPEED) speed--;
+			speed = -MAX_SPEED;
 			Robot.log("DriveTrainBase:tankDrive reverse");
 		} else if (left >= 0 && left > right) {
 			// RIGHT TURN
@@ -64,18 +62,14 @@ public class DriveTrainBase {
 				angle += 90;	
 				Robot.log("DriveTrainBase:tankDrive right to:"+angle);
 			} else {
-				if (speed > 0) speed--;
-				if (speed < 0) speed++;
-				Robot.log("DriveTrainBase:tankDrive speed too fast to turn right");
+				Robot.log("DriveTrainBase:tankDrive cant turn while moving");
 			}
 		} else if (right >= 0 && right > left) {
 			if (speed == 0) {
 				angle -= 90;	
 				Robot.log("DriveTrainBase:tankDrive left to:"+angle);
 			} else {
-				if (speed > 0) speed--;
-				if (speed < 0) speed++;
-				Robot.log("DriveTrainBase:tankDrive speed too fast to turn left");
+				Robot.log("DriveTrainBase:tankDrive cant turn while moving");
 			}
 			
 		}

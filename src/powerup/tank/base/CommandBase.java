@@ -13,6 +13,7 @@ public class CommandBase {
 	}
 	
 	protected boolean isFinished() {
-		return true;
+		Robot.log("CommandBase:isFinished "+this.getClass().getName());
+		return false;
 	}
 }
